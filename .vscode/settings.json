@@ -1,5 +1,5 @@
 {
     "rust-analyzer.linkedProjects": [
-        ".\\tutorial8\\Cargo.toml"
+        ".\\restaurant_simulator\\Cargo.toml"
     ]
 }
