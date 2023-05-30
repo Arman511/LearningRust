@@ -81,12 +81,14 @@ pub mod restaurant {
             io::stdin()
                 .read_line(&mut input)
                 .expect("Failed to read line");
+            let mut foods: Vec<u8> = input
+                .split_whitespace()
+                .map(|s| s.parse().expect("Invalid input"))
+                .collect();
+            foods.remove(0);
             (
                 seat_number,
-                input
-                    .split_whitespace()
-                    .map(|s| s.parse().expect("Invalid input"))
-                    .collect(),
+                foods,
             )
         }
         pub fn serve(&self, food_num: u8, seat_number: u8) -> f32 {
@@ -146,7 +148,7 @@ pub mod restaurant {
             }
 
             pub fn show_ingredients(&self) {
-                println!("Ingredients for {}", self.name);
+                println!("\nIngredients for {}", self.name);
                 for i in &self.ingredients {
                     println!("{}", i)
                 }

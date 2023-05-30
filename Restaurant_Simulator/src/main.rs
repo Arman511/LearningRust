@@ -4,6 +4,7 @@ use std::io;
 mod restaurants;
 use crate::restaurant::food::Food;
 use restaurants::*;
+
 fn main() {
     const PROFIT_MARGINS: f32 = 0.3;
     let mut my_restaurant = get_restaurant();
@@ -12,7 +13,7 @@ fn main() {
     let mut profit: f32 = 0.0;
 
     while ans != 'q' {
-        ans = input_string("++++ RESTAURANT SIMULATOR\nm to show the menu\ng for getting an order\ns for serving an order\na for adding menu item\ni to show ingredients of an item\np to see profits\nc to change the price of a food\nr to remove a food from the menu\n q to quit: ").to_lowercase().chars().next().unwrap();
+        ans = input_string("++++ RESTAURANT SIMULATOR\nm to show the menu\ng for getting an order\ns for serving an order\na for adding menu item\ni to show ingredients of an item\np to see profits\nc to change the price of a food\nr to remove a food from the menu\nq to quit: ").to_lowercase().chars().next().unwrap();
         match ans {
             'q' => break,
             'm' => my_restaurant.print_menu(),
@@ -26,23 +27,25 @@ fn main() {
             }
             'i' => {
                 my_restaurant.print_menu();
-                let food_number: u8 = input_string("Enter the food number to see its ingredients: ")
-                    .parse()
-                    .unwrap();
+                let food_number: u8 =
+                    input_string("Enter the food number to see its ingredients: ")
+                        .parse()
+                        .unwrap();
                 my_restaurant.show_ingredients(food_number);
             }
             's' => {
                 let seat_number: u8 = input_string("Enter the seat number to serve: ")
                     .parse()
                     .unwrap();
-                if let Some(food_numbers) = ordering.get(&seat_number) {
-                    for &food_number in food_numbers {
-                        profit += my_restaurant.serve(food_number, seat_number) * PROFIT_MARGINS;
-                    }
-                    ordering.remove(&seat_number);
-                } else {
+                let mut found=false;
+                for serving_item in ordering.get(&seat_number).unwrap() {
+                    profit += my_restaurant.serve(*serving_item, seat_number) * PROFIT_MARGINS;
+                    found = true;
+                }
+                if !found {
                     println!("No order found for seat number {}", seat_number);
                 }
+                ordering.remove(&seat_number);
             }
             'a' => {
                 let food_name = input_string("Enter the food name: ");
