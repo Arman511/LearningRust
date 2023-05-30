@@ -1,1 +1,0 @@
-C:\Users\Arman\OneDrive\Documents\GitHub\LearningRust\restaurant_simulator\target\debug\restaurant_simulator.exe: C:\Users\Arman\OneDrive\Documents\GitHub\LearningRust\restaurant_simulator\src\main.rs C:\Users\Arman\OneDrive\Documents\GitHub\LearningRust\restaurant_simulator\src\restaurants.rs
