@@ -15,6 +15,7 @@ struct Article {
     link: String,
 }
 
+/// Fetches articles from the provided URL and deserializes the response into the `Articles` struct.
 fn get_articles(url: &str) -> Result<Articles, Box<dyn Error>> {
     let response = ureq::get(url).call()?.into_string()?;
     let articles: Articles = serde_json::from_str(&response)?;
@@ -22,12 +23,15 @@ fn get_articles(url: &str) -> Result<Articles, Box<dyn Error>> {
     Ok(articles)
 }
 
+/// Renders the articles in both console and HTML format.
 fn render_articles(articles: &Articles) -> String {
+    // Print articles in the console
     for article in &articles.results {
         dark_green!("> {}\n", article.title);
         yellow!("- {}\n\n", article.link);
     }
 
+    // Generate HTML code
     let mut html = String::new();
     html.push_str("<html>\n");
     html.push_str("<head>\n");
@@ -44,8 +48,8 @@ fn render_articles(articles: &Articles) -> String {
         html.push_str(&article.link);
         html.push_str("</a><br><br>\n");
     }
-
     html.push_str("</body></html>");
+
     html
 }
 
@@ -56,6 +60,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let html = render_articles(&articles);
 
+    // Create and write HTML content to a file
     let mut file = File::create("articles.html")?;
     file.write_all(html.as_bytes())?;
 
