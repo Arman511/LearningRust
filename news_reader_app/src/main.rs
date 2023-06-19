@@ -1,5 +1,6 @@
 use colour::{dark_green, yellow};
-use newsapi::{Articles, get_articles};
+use dotenv::dotenv;
+use newsapi::{get_articles, Articles};
 use std::error::Error;
 
 /// Renders the articles in both console and HTML format.
@@ -12,9 +13,20 @@ fn render_articles(articles: &Articles) {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let url =
-        "https://newsdata.io/api/1/news?apikey=pub_2476866e13bc3820611c19181e841a1c783e4&language=en&country=gb&category=technology,top";
-    let articles = get_articles(url)?;
+    dotenv()?;
+    let api_key = std::env::var("API_KEY")?;
+    let language = "en";
+    let country = "gb";
+    let category = "top";
+    let base_url = "https://newsdata.io/api/1/news";
+    let fmt_url = format!("{}?apikey={}&language={}&country={}&category={}",
+        base_url,
+        api_key,
+        language,
+        country,
+        category,
+    );
+    let articles = get_articles(&fmt_url)?;
 
     render_articles(&articles);
 
