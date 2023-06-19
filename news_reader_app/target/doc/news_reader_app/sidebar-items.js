@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_articles","main","render_articles"],"struct":["Article","Articles"]};

@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["colour","news_reader_app","serde","serde_derive","serde_json","ureq"];
