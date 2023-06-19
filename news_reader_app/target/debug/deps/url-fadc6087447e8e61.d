@@ -1,0 +1,13 @@
+D:\GitHub\LearningRust\news_reader_app\target\debug\deps\url-fadc6087447e8e61.rmeta: C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\lib.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\host.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\origin.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\parser.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\path_segments.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\slicing.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\quirks.rs
+
+D:\GitHub\LearningRust\news_reader_app\target\debug\deps\liburl-fadc6087447e8e61.rlib: C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\lib.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\host.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\origin.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\parser.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\path_segments.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\slicing.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\quirks.rs
+
+D:\GitHub\LearningRust\news_reader_app\target\debug\deps\url-fadc6087447e8e61.d: C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\lib.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\host.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\origin.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\parser.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\path_segments.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\slicing.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\quirks.rs
+
+C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\lib.rs:
+C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\host.rs:
+C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\origin.rs:
+C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\parser.rs:
+C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\path_segments.rs:
+C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\slicing.rs:
+C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\url-2.4.0\src\quirks.rs:
