@@ -1,0 +1,1 @@
+D:\GitHub\LearningRust\CLI_NewsReader\target\debug\CLI_NewsReader.exe: D:\GitHub\LearningRust\CLI_NewsReader\newsapi\src\lib.rs D:\GitHub\LearningRust\CLI_NewsReader\src\main.rs D:\GitHub\LearningRust\CLI_NewsReader\src\theme.rs
