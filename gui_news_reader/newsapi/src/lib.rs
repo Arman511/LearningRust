@@ -39,7 +39,7 @@ impl NewsAPIResponse {
 pub struct Article {
     title: String,
     link: String,
-    description: String,
+    description: Option<String>,
 }
 
 impl Article {
@@ -50,8 +50,8 @@ impl Article {
         &self.link
     }
 
-    pub fn get_description(&self) -> &str {
-        &self.description
+    pub fn get_description(&self) -> Option<&String> {
+        self.description.as_ref()
     }
 }
 pub enum Category {
