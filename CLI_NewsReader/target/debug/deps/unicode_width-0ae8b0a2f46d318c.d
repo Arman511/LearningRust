@@ -1,8 +1,0 @@
-D:\GitHub\LearningRust\CLI_NewsReader\target\debug\deps\unicode_width-0ae8b0a2f46d318c.rmeta: C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-width-0.1.10\src\lib.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-width-0.1.10\src\tables.rs
-
-D:\GitHub\LearningRust\CLI_NewsReader\target\debug\deps\libunicode_width-0ae8b0a2f46d318c.rlib: C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-width-0.1.10\src\lib.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-width-0.1.10\src\tables.rs
-
-D:\GitHub\LearningRust\CLI_NewsReader\target\debug\deps\unicode_width-0ae8b0a2f46d318c.d: C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-width-0.1.10\src\lib.rs C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-width-0.1.10\src\tables.rs
-
-C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-width-0.1.10\src\lib.rs:
-C:\Users\Arman\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-width-0.1.10\src\tables.rs:
