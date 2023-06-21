@@ -1,30 +1,50 @@
 use eframe::egui::{
-    self, Button, Color32, CtxRef, FontDefinitions, FontFamily, Hyperlink, Key, Label, Layout,
-    Separator, TextStyle, TopBottomPanel, Window,
+    self, epaint::text, Button, Color32, CtxRef, FontDefinitions, FontFamily, Hyperlink, Key,
+    Label, Layout, Separator, TextStyle, TopBottomPanel, Window,
 };
 use serde::{Deserialize, Serialize};
 use std::{
     borrow::Cow,
+    iter::FromIterator,
     sync::mpsc::{Receiver, SyncSender},
 };
 
-pub struct Headlines {
-    pub articles: Vec<NewsCardData>,
-    pub config: HeadlinesConfig,
-    pub api_key_initialized: bool,
-    pub news_rx: Option<Receiver<NewsCardData>>,
-    pub app_tx: Option<SyncSender<Msg>>,
-    pub news2_rx: Option<Receiver<NewsCardData>>,
-    pub app2_tx: Option<SyncSender<Msg>>,
-}
 pub const PADDING: f32 = 5.0;
 const WHITE: Color32 = Color32::from_rgb(255, 255, 255);
 const BLACK: Color32 = Color32::from_rgb(0, 0, 0);
 const RED: Color32 = Color32::from_rgb(255, 0, 0);
 const CYAN: Color32 = Color32::from_rgb(0, 255, 255);
 
+#[derive(Serialize, Deserialize)]
+pub struct HeadlinesConfig {
+    pub dark_mode: bool,
+    pub api_key: String,
+    pub refresh_news_data: bool,
+}
+
+impl Default for HeadlinesConfig {
+    fn default() -> Self {
+        Self {
+            dark_mode: Default::default(),
+            api_key: String::new(),
+            refresh_news_data: Default::default(),
+        }
+    }
+}
+pub struct NewsCardData {
+    pub title: String,
+    pub description: String,
+    pub link: String,
+}
 pub enum Msg {
     ApiKeySet(String),
+}
+pub struct Headlines {
+    pub articles: Vec<NewsCardData>,
+    pub config: HeadlinesConfig,
+    pub api_key_initialized: bool,
+    pub news_rx: Option<Receiver<NewsCardData>>,
+    pub app_tx: Option<SyncSender<Msg>>,
 }
 
 impl Headlines {
@@ -36,8 +56,6 @@ impl Headlines {
             config,
             news_rx: None,
             app_tx: None,
-            news2_rx: None,
-            app2_tx: None,
         }
     }
 
@@ -63,10 +81,27 @@ impl Headlines {
     }
 
     pub fn render_news_card(&self, ui: &mut eframe::egui::Ui) {
+        if self.config.refresh_news_data{
+            let default_loading_msg = NewsCardData {
+                title: String::from("Loading..."),
+                description: String::from(""),
+                link: String::from("")
+            };
+            ui.add_space(PADDING);
+            if self.config.dark_mode {
+                ui.colored_label(WHITE, default_loading_msg.title);
+            } else {
+                ui.colored_label(BLACK, default_loading_msg.title);
+            }
+            return 
+        }
+
+
         for a in &self.articles {
             // render title
             ui.add_space(PADDING);
             let title = format!("▶ {}", a.title);
+
             if self.config.dark_mode {
                 ui.colored_label(WHITE, title);
             } else {
@@ -77,6 +112,7 @@ impl Headlines {
             ui.add_space(PADDING);
             let desc = Label::new(&a.description).text_style(TextStyle::Button);
             ui.add(desc);
+
             // render link
             if self.config.dark_mode {
                 ui.style_mut().visuals.hyperlink_color = CYAN;
@@ -97,16 +133,17 @@ impl Headlines {
             ui.add_space(5.);
             egui::menu::bar(ui, |ui| {
                 ui.with_layout(Layout::left_to_right(), |ui| {
-                    ui.with_layout(Layout::left_to_right(), |ui| {
-                        ui.add(Label::new("📓").text_style(egui::TextStyle::Heading));
-                    });
+                    ui.add(Label::new("📓").text_style(egui::TextStyle::Heading));
                 });
                 ui.with_layout(Layout::right_to_left(), |ui| {
                     let close_btn = ui.add(Button::new("❌").text_style(egui::TextStyle::Body));
                     if close_btn.clicked() {
                         frame.quit();
                     }
-
+                    let refresh_btn = ui.add(Button::new("🔄").text_style(egui::TextStyle::Body));
+                    if refresh_btn.clicked(){
+                        self.config.refresh_news_data=true;
+                    }
                     let theme_btn = ui.add(
                         Button::new({
                             if self.config.dark_mode {
@@ -125,6 +162,19 @@ impl Headlines {
             ui.add_space(5.);
         });
     }
+    pub fn preload_articles(&mut self) {
+        if let Some(rx) = &self.news_rx {
+            match rx.try_recv() {
+                Ok(news_data) => {
+                    if self.articles.len() < 10 {
+                        self.articles.push(news_data);
+                    }
+                }
+    
+                Err(e) => tracing::warn!("Error receiving msg: {}", e),
+            }
+        }
+    }
     pub fn render_config(&mut self, ctx: &CtxRef) {
         Window::new("Configuration").show(ctx, |ui| {
             ui.label("Enter your API_KEY for newsdata.io");
@@ -135,6 +185,7 @@ impl Headlines {
                     HeadlinesConfig {
                         dark_mode: self.config.dark_mode,
                         api_key: self.config.api_key.to_string(),
+                        refresh_news_data: self.config.refresh_news_data,
                     },
                 ) {
                     tracing::error!("Failed saving app state: {}", e)
@@ -146,42 +197,10 @@ impl Headlines {
                         .expect("Failed sending ApiKeySet event");
                 }
             }
+            tracing::error!("{}", &self.config.api_key);
             ui.label("If you haven't registered for the API_KEY, head of to ");
             ui.add(Hyperlink::new("https://newsdata.io"));
         });
     }
 
-    pub fn preload_articles(&mut self) {
-        if let Some(rx) = &self.news_rx {
-            match rx.try_recv() {
-                Ok(news_data) => {
-                    if self.articles.len() < 10 {
-                        self.articles.push(news_data);
-                    }
-                }
-
-                Err(e) => tracing::warn!("Error receiving msg: {}", e),
-            }
-        }
-    }
-}
-
-impl Default for HeadlinesConfig {
-    fn default() -> Self {
-        Self {
-            dark_mode: Default::default(),
-            api_key: String::new(),
-        }
-    }
-}
-#[derive(Serialize, Deserialize)]
-pub struct HeadlinesConfig {
-    pub dark_mode: bool,
-    pub api_key: String,
-}
-
-pub struct NewsCardData {
-    pub title: String,
-    pub description: String,
-    pub link: String,
 }

@@ -23,6 +23,7 @@ impl App for Headlines {
         _storage: Option<&dyn eframe::epi::Storage>,
     ) {
         let api_key = self.config.api_key.to_string();
+        let refresh_news_data = self.config.refresh_news_data;
 
         let (mut news_tx, news_rx) = channel();
         let (app_tx, app_rx) = sync_channel(1);
@@ -39,28 +40,17 @@ impl App for Headlines {
                     }
                 }
             }
-            if let Ok(response) = NewsAPI::new(&api_key).fetch() {
-                let resp_articles = response.articles();
-                for a in resp_articles.iter() {
-                    let news = NewsCardData {
-                        title: a.get_title().to_string(),
-                        link: a.get_link().to_string(),
-                        description: a
-                            .get_description()
-                            .map(|s| s.to_string())
-                            .unwrap_or("...".to_string()),
-                    };
-                    if let Err(e) = news_tx.send(news) {
-                        tracing::error!("Error of sending data: {}", e)
-                    };
-                }
-            }
         });
         self.configure_font(ctx);
     }
 
     fn update(&mut self, ctx: &eframe::egui::CtxRef, frame: &mut eframe::epi::Frame<'_>) {
         ctx.request_repaint();
+        if self.config.refresh_news_data{
+            self.config.refresh_news_data = false;
+            let (mut news_tx, _news_rx) = channel();
+            fetch_news(&self.config.api_key.to_string(), &mut news_tx);
+        }
         if self.config.dark_mode {
             ctx.set_visuals(egui::Visuals::dark())
         } else {
